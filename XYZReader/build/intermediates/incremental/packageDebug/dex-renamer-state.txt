@@ -1,0 +1,4 @@
+#Thu Oct 27 15:58:39 IST 2016
+base.0=G\:\\Workspace\\ANDROID\\MaterialDesign_xyzreader\\XYZReader\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\1f\\main
+renamed.0=classes.dex
+file.0=G\:\\Workspace\\ANDROID\\MaterialDesign_xyzreader\\XYZReader\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\1f\\main\\classes.dex
