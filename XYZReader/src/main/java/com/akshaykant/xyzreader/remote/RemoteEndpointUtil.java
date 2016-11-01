@@ -1,6 +1,8 @@
-package com.example.xyzreader.remote;
+package com.akshaykant.xyzreader.remote;
 
 import android.util.Log;
+
+import com.akshaykant.xyzreader.remote.Config;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,7 +22,7 @@ public class RemoteEndpointUtil {
     }
 
     public static JSONArray fetchJsonArray() {
-        String itemsJson = null;
+        String itemsJson;
         try {
             itemsJson = fetchPlainText(Config.BASE_URL);
         } catch (IOException e) {

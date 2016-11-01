@@ -20,10 +20,11 @@
  * -Changed package name
  */
 
-package com.example.xyzreader.data;
+package com.akshaykant.xyzreader.data;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 
 import android.content.ContentValues;
@@ -45,6 +46,7 @@ public class SelectionBuilder {
     /**
      * Reset any internal state, allowing this builder to be recycled.
      */
+    @SuppressWarnings("unused")
     public SelectionBuilder reset() {
         mTable = null;
 		if (mProjectionMap != null) {
@@ -82,9 +84,7 @@ public class SelectionBuilder {
         mSelection.append("(").append(selection).append(")");
         if (selectionArgs != null) {
         	ensureSelectionArgs();
-            for (String arg : selectionArgs) {
-                mSelectionArgs.add(arg);
-            }
+            Collections.addAll(mSelectionArgs, selectionArgs);
         }
 
         return this;
@@ -103,7 +103,7 @@ public class SelectionBuilder {
 
     private void ensureProjectionMap() {
 		if (mProjectionMap == null) {
-			mProjectionMap = new HashMap<String, String>();
+			mProjectionMap = new HashMap<>();
 		}
     }
 
@@ -115,16 +115,18 @@ public class SelectionBuilder {
 
     private void ensureSelectionArgs() {
     	if (mSelectionArgs == null) {
-    		mSelectionArgs = new ArrayList<String>();
+    		mSelectionArgs = new ArrayList<>();
     	}
     }
 
+    @SuppressWarnings("unused")
     public SelectionBuilder mapToTable(String column, String table) {
     	ensureProjectionMap();
         mProjectionMap.put(column, table + "." + column);
         return this;
     }
 
+    @SuppressWarnings("unused")
     public SelectionBuilder map(String fromColumn, String toClause) {
     	ensureProjectionMap();
         mProjectionMap.put(fromColumn, toClause + " AS " + fromColumn);

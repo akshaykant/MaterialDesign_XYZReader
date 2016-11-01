@@ -1,4 +1,4 @@
-package com.example.xyzreader.ui;
+package com.akshaykant.xyzreader.ui;
 
 import android.app.Fragment;
 import android.app.LoaderManager;
@@ -23,10 +23,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.akshaykant.xyzreader.R;
+import com.akshaykant.xyzreader.data.ArticleLoader;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
-import com.example.xyzreader.R;
-import com.example.xyzreader.data.ArticleLoader;
+
 
 /**
  * A fragment representing a single Article detail screen. This fragment is
@@ -181,7 +182,6 @@ public class ArticleDetailFragment extends Fragment implements
         TextView bylineView = (TextView) mRootView.findViewById(R.id.article_byline);
         bylineView.setMovementMethod(new LinkMovementMethod());
         TextView bodyView = (TextView) mRootView.findViewById(R.id.article_body);
-        bodyView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Rosario-Regular.ttf"));
 
         if (mCursor != null) {
             mRootView.setAlpha(0);
