@@ -1,37 +1,23 @@
 package com.akshaykant.xyzreader.ui;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.LoaderManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.Rect;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v13.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.text.format.DateUtils;
-import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowInsets;
-import android.widget.TextView;
-
 
 import com.akshaykant.xyzreader.R;
 import com.akshaykant.xyzreader.data.ArticleLoader;
-import com.akshaykant.xyzreader.data.ItemsContract;
 import com.akshaykant.xyzreader.data.UpdaterService;
 
 
@@ -47,6 +33,8 @@ public class ArticleListActivity extends AppCompatActivity implements SwipeRefre
     private Toolbar mToolbar;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
+
+    private ArticleListAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,15 +57,30 @@ public class ArticleListActivity extends AppCompatActivity implements SwipeRefre
                                        RecyclerView.State state) {
                 int position = parent.getChildAdapterPosition(view);
                 int space = (int) getResources().getDimension(R.dimen.material_component_cards_space_between_cards);
+
+                if (position == 0 || position == 1) {
+                    outRect.top = space;
+                } else {
+                    outRect.top = 0;
+                }
                 if (position % 2 == 0) {
                     outRect.right = space;
                 }
-                outRect.top = space;
                 outRect.bottom = space;
             }
         });
 
-        getLoaderManager().initLoader(0, null, this);
+        int columnCount = getResources().getInteger(R.integer.list_column_count);
+        StaggeredGridLayoutManager staggeredGridLayoutManager =
+                new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(staggeredGridLayoutManager);
+
+        mAdapter = new ArticleListAdapter(null);
+        mAdapter.setHasStableIds(true);
+        mRecyclerView.setAdapter(mAdapter);
+
+        getSupportLoaderManager().initLoader(0, null, this);
+
 
         if (savedInstanceState == null) {
             refresh();
@@ -102,7 +105,6 @@ public class ArticleListActivity extends AppCompatActivity implements SwipeRefre
     }
 
 
-
     private BroadcastReceiver mRefreshingReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -122,18 +124,12 @@ public class ArticleListActivity extends AppCompatActivity implements SwipeRefre
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
 
-        ArticleListAdapter adapter = new ArticleListAdapter(cursor);
-        adapter.setHasStableIds(true);
-        mRecyclerView.setAdapter(adapter);
-        int columnCount = getResources().getInteger(R.integer.list_column_count);
-        StaggeredGridLayoutManager staggeredGridLayoutManager =
-                new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
-        mRecyclerView.setLayoutManager(staggeredGridLayoutManager);
+        mAdapter.swapCursor(cursor);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        mRecyclerView.setAdapter(null);
+        mAdapter.swapCursor(null);
     }
 
     @Override
