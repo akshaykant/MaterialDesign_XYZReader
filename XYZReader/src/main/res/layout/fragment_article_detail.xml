@@ -17,10 +17,11 @@
                 android:id="@+id/toolbar_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:expandedTitleMargin="@dimen/material_layout_keylines_screen_edge_margin"
-                app:expandedTitleMarginBottom="@dimen/expanded_title_margin_bottom"
+                android:fitsSystemWindows="true"
+                app:expandedTitleMargin="@dimen/activity_horizontal_margin"
+                app:expandedTitleMarginBottom="@dimen/expanded_toolbar_title_margin_bottom"
                 app:expandedTitleTextAppearance="@style/ExpandedTitleTextAppearance"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:layout_scrollFlags="scroll"
                 app:toolbarId="@+id/toolbar">
 
                 <FrameLayout
@@ -28,10 +29,12 @@
                     android:layout_height="match_parent"
                     android:fitsSystemWindows="true">
 
+
                     <ImageView
                         android:id="@+id/photo"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:fitsSystemWindows="true"
                         android:scaleType="centerCrop"
                         tools:ignore="ContentDescription" />
 
@@ -48,8 +51,8 @@
                         android:elevation="@dimen/app_bar_elevation"
                         android:orientation="vertical"
                         android:paddingBottom="@dimen/material_layout_keylines_screen_edge_margin"
-                        android:paddingLeft="@dimen/material_layout_keylines_screen_edge_margin"
-                        android:paddingRight="@dimen/material_layout_keylines_screen_edge_margin"
+                        android:paddingLeft="@dimen/activity_horizontal_margin"
+                        android:paddingRight="@dimen/activity_horizontal_margin"
                         android:paddingTop="@dimen/material_layout_keylines_screen_edge_margin">
 
                         <TextView
@@ -57,9 +60,9 @@
                             style="?android:attr/textAppearanceLarge"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:maxLines="1"
                             android:textColor="@color/material_light_white"
                             android:textStyle="bold"
-                            android:maxLines="1"
                             android:visibility="invisible" />
 
                         <TextView
@@ -70,12 +73,14 @@
                             android:textColor="@color/material_light_white" />
 
                     </LinearLayout>
+
                 </FrameLayout>
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/detail_toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
+                    app:contentInsetStart="@dimen/activity_horizontal_margin"
                     app:layout_collapseMode="pin"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
@@ -101,9 +106,13 @@
                     style="?android:attr/textAppearanceMedium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/material_layout_keylines_screen_edge_margin"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/material_layout_keylines_screen_edge_margin"
                     android:autoLink="web"
                     android:linksClickable="true"
-                    android:padding="@dimen/material_layout_keylines_screen_edge_margin"
+                    android:paddingTop="@dimen/material_layout_keylines_screen_edge_margin"
                     android:textColor="@android:color/black" />
 
             </LinearLayout>

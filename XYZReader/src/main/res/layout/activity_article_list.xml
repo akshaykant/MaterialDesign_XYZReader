@@ -1,25 +1,11 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.design.widget.AppBarLayout
-            android:id="@+id/app_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.AppBarOverlay">
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_scrollFlags="scroll|enterAlways"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-        </android.support.design.widget.AppBarLayout>
+        <include layout="@layout/include_article_list_toolbar" />
 
 
         <FrameLayout
@@ -28,24 +14,7 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <android.support.v4.widget.SwipeRefreshLayout
-                android:id="@+id/swipe_refresh_layout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recycler_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/material_grey_300"
-                    android:clipToPadding="false"
-                    android:paddingTop="@dimen/material_component_cards_padding_from_edge_of_screen_to_card"
-                    android:paddingBottom="@dimen/material_component_cards_padding_from_edge_of_screen_to_card"
-                    android:paddingLeft="@dimen/material_component_cards_left_and_right_padding"
-                    android:paddingRight="@dimen/material_component_cards_left_and_right_padding"
-                    android:scrollbarStyle="outsideOverlay"
-                    tools:ignore="PrivateResource" />
-            </android.support.v4.widget.SwipeRefreshLayout>
+            <include layout="@layout/include_article_list" />
 
         </FrameLayout>
     </android.support.design.widget.CoordinatorLayout>

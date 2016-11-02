@@ -48,10 +48,11 @@ public class ArticleListActivity extends AppCompatActivity implements SwipeRefre
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
         setSupportActionBar(mToolbar);
-        mToolbar.setTitle(R.string.app_name);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        mRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+
+     /*   mRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent,
                                        RecyclerView.State state) {
@@ -68,9 +69,9 @@ public class ArticleListActivity extends AppCompatActivity implements SwipeRefre
                 }
                 outRect.bottom = space;
             }
-        });
+        });*/
 
-        int columnCount = getResources().getInteger(R.integer.list_column_count);
+        int columnCount = getResources().getInteger(R.integer.grid_column_count);
         StaggeredGridLayoutManager staggeredGridLayoutManager =
                 new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(staggeredGridLayoutManager);

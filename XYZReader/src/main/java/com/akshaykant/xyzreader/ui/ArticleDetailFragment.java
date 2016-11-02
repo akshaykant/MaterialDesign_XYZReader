@@ -2,23 +2,29 @@ package com.akshaykant.xyzreader.ui;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.content.Loader;
 import android.support.v7.graphics.Palette;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.akshaykant.xyzreader.R;
 import com.akshaykant.xyzreader.data.ArticleLoader;
-import com.akshaykant.xyzreader.databinding.FragmentArticleDetailBinding;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
@@ -38,7 +44,17 @@ public class ArticleDetailFragment extends Fragment implements
 
     private long mItemId;
 
-    FragmentArticleDetailBinding binding;
+    ImageView mPhotoView;
+    LinearLayout metaBar;
+    TextView mTitleView;
+    TextView mAuthorView;
+    TextView mBodyView;
+
+    FloatingActionButton mShareFab;
+    Toolbar mToolbar;
+    CollapsingToolbarLayout mCollapsingToolbarLayout;
+    AppBarLayout mAppBarLayout;
+    CardView mCard;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -81,10 +97,22 @@ public class ArticleDetailFragment extends Fragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_article_detail, container, false);
-        View root = binding.getRoot();
+        View view = inflater.inflate(R.layout.fragment_article_detail, container, false);
 
-        return root;
+
+        mPhotoView = (ImageView) view.findViewById(R.id.photo);
+        mTitleView = (TextView) view.findViewById(R.id.article_title);
+        mAuthorView = (TextView) view.findViewById(R.id.article_author);
+        mBodyView = (TextView) view.findViewById(R.id.article_body);
+
+        mShareFab = (FloatingActionButton) view.findViewById(R.id.share_fab);
+        mToolbar = (Toolbar) view.findViewById(R.id.detail_toolbar);
+        mCollapsingToolbarLayout = (CollapsingToolbarLayout) view.findViewById(R.id.toolbar_layout);
+        mAppBarLayout = (AppBarLayout) view.findViewById(R.id.app_bar);
+        mCard = (CardView) view.findViewById(R.id.card);
+
+
+        return view;
     }
 
     @Override
@@ -110,19 +138,23 @@ public class ArticleDetailFragment extends Fragment implements
 
         String photo = cursor.getString(ArticleLoader.Query.PHOTO_URL);
 
-        binding.detailToolbar.setTitle(title);
-
-        binding.detailToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black);
-        binding.detailToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().finish();
+        if (mToolbar != null) {
+            if (mCard == null) {
+                mToolbar.setTitle(title);
             }
-        });
 
-        binding.articleTitle.setText(title);
-        binding.articleAuthor.setText(author);
-        binding.articleBody.setText(body);
+            mToolbar.setNavigationIcon(R.drawable.ic_arrow_back_black);
+            mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getActivity().finish();
+                }
+            });
+        }
+
+        mTitleView.setText(title);
+        mAuthorView.setText(author);
+        mBodyView.setText(body);
 
         Glide.with(this)
                 .load(photo)
@@ -142,9 +174,9 @@ public class ArticleDetailFragment extends Fragment implements
                         return false;
                     }
                 })
-                .into(binding.photo);
+                .into(mPhotoView);
 
-        binding.shareFab.setOnClickListener(new View.OnClickListener() {
+        mShareFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(getActivity())
@@ -155,13 +187,16 @@ public class ArticleDetailFragment extends Fragment implements
         });
     }
 
+
     private void changeUIColors(Bitmap bitmap) {
         Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
             public void onGenerated(Palette palette) {
                 int defaultColor = 0xFF333333;
                 int darkMutedColor = palette.getMutedColor(defaultColor);
-                binding.toolbarLayout.setContentScrimColor(darkMutedColor);
-                binding.toolbarLayout.setStatusBarScrimColor(darkMutedColor);
+                if (mCollapsingToolbarLayout != null) {
+                    mCollapsingToolbarLayout.setContentScrimColor(darkMutedColor);
+                    mCollapsingToolbarLayout.setStatusBarScrimColor(darkMutedColor);
+                }
             }
         });
     }

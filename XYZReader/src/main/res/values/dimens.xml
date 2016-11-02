@@ -8,13 +8,19 @@
     <dimen name="fab_press_translation_z">6dp</dimen>
     <dimen name="fab_margin">24dp</dimen>
 
+    <integer name="grid_column_count">2</integer>
+
     <dimen name="title">80dp</dimen>
+
+    <dimen name="max_width">400dp</dimen>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+
     <!--Grid-->
     <integer name="list_column_count">2</integer>
 
     <!--Toolbar-->
     <dimen name="expanded_toolbar_height">80dp</dimen>
-    <dimen name="expanded_title_margin_bottom">40dp</dimen>
+    <dimen name="expanded_toolbar_title_margin_bottom">40dp</dimen>
 
     <!--App Bar-->
     <dimen name="app_bar_elevation">4dp</dimen>
