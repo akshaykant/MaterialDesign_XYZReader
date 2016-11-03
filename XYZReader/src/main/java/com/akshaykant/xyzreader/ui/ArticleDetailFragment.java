@@ -104,6 +104,7 @@ public class ArticleDetailFragment extends Fragment implements
         mTitleView = (TextView) view.findViewById(R.id.article_title);
         mAuthorView = (TextView) view.findViewById(R.id.article_author);
         mBodyView = (TextView) view.findViewById(R.id.article_body);
+        metaBar = (LinearLayout) view.findViewById(R.id.meta_bar);
 
         mShareFab = (FloatingActionButton) view.findViewById(R.id.share_fab);
         mToolbar = (Toolbar) view.findViewById(R.id.detail_toolbar);
@@ -192,7 +193,8 @@ public class ArticleDetailFragment extends Fragment implements
         Palette.generateAsync(bitmap, new Palette.PaletteAsyncListener() {
             public void onGenerated(Palette palette) {
                 int defaultColor = 0xFF333333;
-                int darkMutedColor = palette.getMutedColor(defaultColor);
+                int darkMutedColor = palette.getDarkMutedColor(defaultColor);
+                metaBar.setBackgroundColor(darkMutedColor);
                 if (mCollapsingToolbarLayout != null) {
                     mCollapsingToolbarLayout.setContentScrimColor(darkMutedColor);
                     mCollapsingToolbarLayout.setStatusBarScrimColor(darkMutedColor);
